@@ -3,17 +3,22 @@ package internal
 import (
 	"bytes"
 	"fmt"
-	"github.com/aman-bansal/go_get_set_generator/get_set_generate/internal/models"
 	"go/format"
 	"go/token"
 	"log"
 	"path"
 	"sort"
 	"strconv"
+	"strings"
 	"unicode"
+
+	"github.com/aman-bansal/go_get_set_generator/get_set_generate/internal/models"
 )
 
 type Generator struct {
+	Setters bool
+	Getters bool
+
 	buf        bytes.Buffer
 	indent     string
 	packageMap map[string]string // map from import path to package structName
@@ -29,7 +34,7 @@ func (g *Generator) in() {
 
 func (g *Generator) out() {
 	if len(g.indent) > 0 {
-		g.indent = g.indent[0 : len(g.indent)-1]
+		g.indent = g.indent[:len(g.indent)-1]
 	}
 }
 
@@ -95,22 +100,26 @@ func (g *Generator) Generate(file *models.FileInfo) error {
 
 func (g *Generator) GenerateGetterAndSetters(obj *models.Struct, currentPackage string) error {
 	g.p("")
-	g.p("// This is a getter and setter of %v ", obj.Name)
 
 	for _, field := range obj.Fields {
-		g.p("func (%v *%v) Get%v() %v {", obj.Name, obj.Name, field.Name, field.Type.String(g.packageMap, currentPackage))
-		g.in()
-		g.p("return %v.%v", obj.Name, field.Name)
-		g.out()
-		g.p("}")
-		g.p("")
+		receiver := strings.ToLower(obj.Name)[:1]
+		if g.Getters {
+			g.p("func (%v %v) Get%v() %v {", receiver, obj.Name, field.Name, field.Type.String(g.packageMap, currentPackage))
+			g.in()
+			g.p("return %v.%v", receiver, field.Name)
+			g.out()
+			g.p("}")
+			g.p("")
+		}
 
-		g.p("func (%v *%v) Set%v(val %v) {", obj.Name, obj.Name, field.Name, field.Type.String(g.packageMap, currentPackage))
-		g.in()
-		g.p("%v.%v = val", obj.Name, field.Name)
-		g.out()
-		g.p("}")
-		g.p("")
+		if g.Setters {
+			g.p("func (%v *%v) Set%v(val %v) {", receiver, obj.Name, field.Name, field.Type.String(g.packageMap, currentPackage))
+			g.in()
+			g.p("%v.%v = val", receiver, field.Name)
+			g.out()
+			g.p("}")
+			g.p("")
+		}
 	}
 
 	return nil
