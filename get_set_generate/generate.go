@@ -8,7 +8,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/aman-bansal/go_get_set_generator/get_set_generate/internal"
+	"github.com/Jille/go_get_set_generator/get_set_generate/internal"
 )
 
 var (
