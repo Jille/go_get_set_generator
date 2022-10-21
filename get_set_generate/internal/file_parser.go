@@ -4,7 +4,7 @@ package internal
 
 import (
 	"fmt"
-	"github.com/aman-bansal/go_get_set_generator/get_set_generate/internal/models"
+	"github.com/Jille/go_get_set_generator/get_set_generate/internal/models"
 	"go/ast"
 	"go/build"
 	"go/parser"

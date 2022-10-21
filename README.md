@@ -7,7 +7,7 @@ Installation
 
 You need to install the go_get_set_generator. To get the latest released version use:
 
-```GO111MODULE=on go get github.com/aman-bansal/go_get_set_generator@latest```
+```GO111MODULE=on go get github.com/Jille/go_get_set_generator@latest```
 
 Running go_get_set_generator
 ----------------------------

@@ -1,6 +1,6 @@
 package test
 
-import "github.com/aman-bansal/go_get_set_generator/test/sample"
+import "github.com/Jille/go_get_set_generator/test/sample"
 
 type SampleObject3 struct {
 	Id          string
