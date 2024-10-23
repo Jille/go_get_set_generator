@@ -4,7 +4,6 @@ package internal
 
 import (
 	"fmt"
-	"github.com/aman-bansal/go_get_set_generator/get_set_generate/internal/models"
 	"go/ast"
 	"go/build"
 	"go/parser"
@@ -14,6 +13,8 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/Jille/go_get_set_generator/get_set_generate/internal/models"
 )
 
 func ParseFile(source string) (*models.FileInfo, error) {
